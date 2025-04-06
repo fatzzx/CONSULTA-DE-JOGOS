@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
+import PlatformIcon from "../components/PlatformIcon";
+import { storeLogos } from "../utils/storeLogos";
 
 export default function GameDetails() {
   const { id } = useParams();
@@ -32,6 +34,24 @@ export default function GameDetails() {
   if (loading) return <Loading />;
   if (!game) return <div className="text-white p-4">Jogo não encontrado.</div>;
 
+  const groupedPlatforms = {};
+  game.platforms.forEach(({ platform }) => {
+    let key = "other";
+    if (/playstation/i.test(platform.name)) key = "playstation";
+    else if (/xbox/i.test(platform.name)) key = "xbox";
+    else if (/pc/i.test(platform.name)) key = "pc";
+    else if (/nintendo/i.test(platform.name)) key = "nintendo";
+    else if (/mac|linux/i.test(platform.name)) key = "desktop";
+    else if (/ios|android/i.test(platform.name)) key = "mobile";
+
+    if (!groupedPlatforms[key]) groupedPlatforms[key] = [];
+    groupedPlatforms[key].push(platform.name);
+  });
+
+  const uniqueStores = Array.from(
+    new Map(stores.map((s) => [s.store.name, s])).values()
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-6">
       <button
@@ -52,39 +72,81 @@ export default function GameDetails() {
 
         <div>
           <h1 className="text-4xl font-extrabold mb-4">{game.name}</h1>
+
           <p className="text-gray-300 mb-6 leading-relaxed text-lg">
             {game.description_raw}
           </p>
+
           <div className="mb-4">
             <span className="text-sm text-gray-400">Avaliação:</span>
             <p className="text-xl">
               ⭐ {game.rating} / 5 ({game.ratings_count} avaliações)
             </p>
           </div>
+
+          {game.metacritic && (
+            <div className="mb-4">
+              <span className="text-sm text-gray-400">Metacritic:</span>
+              <p className="text-xl text-green-400">{game.metacritic}</p>
+            </div>
+          )}
+
           <div className="mb-4">
             <span className="text-sm text-gray-400">Gêneros:</span>
-            <p>{game.genres.map((g) => g.name).join(", ")}</p>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {game.genres.map((g) => (
+                <span
+                  key={g.id}
+                  className="bg-gray-800 px-3 py-1 rounded-full text-sm"
+                >
+                  {g.name}
+                </span>
+              ))}
+            </div>
           </div>
+
           <div className="mb-4">
             <span className="text-sm text-gray-400">Plataformas:</span>
-            <p>{game.platforms.map((p) => p.platform.name).join(", ")}</p>
+            <div className="flex flex-col gap-1 mt-1">
+              {Object.entries(groupedPlatforms).map(([key, names]) => (
+                <div key={key} className="flex items-start gap-2">
+                  <PlatformIcon name={key} />
+                  <span className="text-sm">{names.join(", ")}</span>
+                </div>
+              ))}
+            </div>
           </div>
+
           <div className="mb-6">
             <span className="text-sm text-gray-400">Loja(s):</span>
-            <ul className="list-disc list-inside">
-              {stores.map((store) => (
-                <li key={store.id}>
+            <div className="flex flex-wrap gap-3 mt-2">
+              {uniqueStores.map((store) => {
+                const key = store.store.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "_")
+                  .replace(/[^a-z0-9_]/g, "");
+                const logo = storeLogos[key];
+
+                return (
                   <a
+                    key={store.id}
                     href={`https://${store.store.domain}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-cyan-400 hover:underline"
+                    className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-full text-sm transition"
                   >
+                    {logo && (
+                      <img
+                        src={logo}
+                        alt={store.store.name}
+                        className="w-5 h-5"
+                      />
+                    )}
                     {store.store.name}
                   </a>
-                </li>
-              ))}
-            </ul>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
