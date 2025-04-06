@@ -34,8 +34,21 @@ export default function SearchSection({
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Busque um jogo..."
-            className="flex-grow p-4 pl-12 rounded-l-xl bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+            className="flex-grow p-4 pl-12 pr-10 rounded-l-xl bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
+
+          {searchTerm && (
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                setSuggestions([]);
+              }}
+              className="absolute right-28 top-3 text-gray-400 hover:text-white"
+              title="Limpar busca"
+            >
+              ✕
+            </button>
+          )}
 
           <button
             onClick={() => {

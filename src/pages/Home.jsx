@@ -44,10 +44,19 @@ export default function Home() {
     fetchSuggestions();
   }, [searchTerm]);
 
+  // 👉 Limpa resultados se barra estiver vazia
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setSuggestions([]);
+      setResults([]);
+      setHasSearched(false);
+    }
+  }, [searchTerm]);
+
   const handleSearch = async () => {
     if (!searchTerm) return;
 
-    setSuggestions([]); // 👈 esconde sugestões ao buscar
+    setSuggestions([]);
     setHasSearched(true);
     setLoading(true);
     try {
