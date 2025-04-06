@@ -8,7 +8,7 @@ const games = [
 
 export default function GameList() {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-20">
+    <section className="flex justify-center items-center md:grid-cols-3 gap-8 px-6 pb-20">
       {games.map((game, idx) => (
         <GameCard key={idx} title={game.title} details={game.details} />
       ))}
