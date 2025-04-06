@@ -22,3 +22,9 @@ body {
 .gradient-btn {
   background: linear-gradient(90deg, #38bdf8, #6366f1);
 }
+
+/* ✅ Remove o “X” (cancel/clear) do input em navegadores WebKit */
+input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  display: none;
+}

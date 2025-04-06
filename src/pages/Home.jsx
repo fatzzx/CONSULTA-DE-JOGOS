@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import SearchSection from "../components/SearchSection";
 import GameList from "../components/GameList";
@@ -6,15 +6,48 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [games, setGames] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
   const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (searchTerm.length < 3) {
+        setSuggestions([]);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://api.rawg.io/api/games?key=${API_KEY}&search=${encodeURIComponent(
+            searchTerm
+          )}&page_size=5`
+        );
+        const data = await response.json();
+
+        const sorted = data.results
+          .sort((a, b) => b.ratings_count - a.ratings_count)
+          .map((game) => ({
+            id: game.id,
+            title: game.name,
+          }));
+
+        setSuggestions(sorted);
+      } catch (error) {
+        console.error("Erro ao buscar sugestões:", error);
+      }
+    };
+
+    fetchSuggestions();
+  }, [searchTerm]);
+
   const handleSearch = async () => {
     if (!searchTerm) return;
 
+    setSuggestions([]); // 👈 esconde sugestões ao buscar
     setHasSearched(true);
     setLoading(true);
     try {
@@ -27,7 +60,7 @@ export default function Home() {
 
       const lowerSearch = searchTerm.toLowerCase();
 
-      const sortedGames = data.results
+      const sorted = data.results
         .filter((game) => game.genres.length > 0 && game.rating > 0)
         .sort((a, b) => {
           const aName = a.name.toLowerCase();
@@ -41,18 +74,15 @@ export default function Home() {
 
           return b.ratings_count - a.ratings_count;
         })
-        .map((game) => {
-          const genres = game.genres.map((g) => g.name).join(", ");
-          return {
-            id: game.id,
-            title: game.name,
-            genres,
-            rating: game.rating.toFixed(1),
-            image: game.background_image,
-          };
-        });
+        .map((game) => ({
+          id: game.id,
+          title: game.name,
+          genres: game.genres.map((g) => g.name).join(", "),
+          rating: game.rating.toFixed(1),
+          image: game.background_image,
+        }));
 
-      setGames(sortedGames);
+      setResults(sorted);
     } catch (error) {
       console.error("Erro ao buscar jogos:", error);
     } finally {
@@ -67,8 +97,10 @@ export default function Home() {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         onSearch={handleSearch}
+        suggestions={suggestions}
+        setSuggestions={setSuggestions}
       />
-      <GameList games={games} loading={loading} hasSearched={hasSearched} />
+      <GameList games={results} loading={loading} hasSearched={hasSearched} />
       <Footer />
     </div>
   );
