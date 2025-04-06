@@ -1,4 +1,10 @@
-export default function SearchSection() {
+export default function SearchSection({ searchTerm, setSearchTerm, onSearch }) {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onSearch();
+    }
+  };
+
   return (
     <section className="text-center py-20 px-6">
       <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -8,12 +14,21 @@ export default function SearchSection() {
         Compare tempo de campanha, preço e popularidade para tomar decisões
         inteligentes antes de jogar.
       </p>
-      <div className="relative w-full max-w-2xl mx-auto">
+      <div className="relative w-full max-w-2xl mx-auto flex">
         <input
           type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Busque um jogo..."
-          className="w-full p-4 pl-12 rounded-xl bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+          className="flex-grow p-4 pl-12 rounded-l-xl bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-400"
         />
+        <button
+          onClick={onSearch}
+          className="px-6 rounded-r-xl bg-sky-500 text-white hover:bg-sky-600 transition-colors"
+        >
+          Buscar
+        </button>
         <svg
           className="absolute top-3 left-4 text-gray-500 w-6 h-6"
           fill="none"
