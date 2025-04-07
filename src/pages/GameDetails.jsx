@@ -10,6 +10,7 @@ export default function GameDetails() {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [stores, setStores] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
   useEffect(() => {
@@ -28,7 +29,20 @@ export default function GameDetails() {
       }
     }
 
+    const fetchReviews = async () => {
+      try {
+        const res = await fetch(
+          `https://api.rawg.io/api/games/${id}/reviews?key=${RAWG_API_KEY}`
+        );
+        const data = await res.json();
+        setReviews(data.results || []);
+      } catch (err) {
+        console.error("Erro ao buscar reviews:", err);
+      }
+    };
+
     fetchDetails();
+    fetchReviews();
   }, [id]);
 
   if (loading) return <Loading />;
@@ -159,6 +173,28 @@ export default function GameDetails() {
             controls
             className="w-full rounded-lg shadow-lg"
           />
+        </div>
+      )}
+
+      
+      {reviews.length > 0 && (
+        <div className="max-w-5xl mx-auto mt-12">
+          <h2 className="text-2xl font-semibold mb-4">Opiniões dos jogadores</h2>
+          <ul className="space-y-4">
+            {reviews.slice(0, 5).map((review) => (
+              <li key={review.id} className="bg-gray-800 p-4 rounded-xl shadow">
+                <p className="text-sm text-gray-400 mb-2">
+                  {review.user ? review.user.username : "Anônimo"} disse:
+                </p>
+                <div
+                  className="text-lg space-y-2"
+                  dangerouslySetInnerHTML={{
+                    __html: review.text || "Sem texto disponível para esta review.",
+                  }}
+                ></div>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
