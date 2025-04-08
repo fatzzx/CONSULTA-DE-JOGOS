@@ -20,7 +20,7 @@ export default function GameCard({ title, genres, rating, image, id }) {
           className="mt-auto bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded-md transition-colors"
           onClick={() => navigate(`/jogo/${id}`)}
         >
-          Ver detalhes
+          See Details
         </button>
       </div>
     </div>
