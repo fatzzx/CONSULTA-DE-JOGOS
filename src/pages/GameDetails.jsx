@@ -159,14 +159,14 @@ export default function GameDetails() {
             priceData.isFree ? (
               <div className="mb-6 mt-8">
                 <h2 className="text-xl font-semibold mb-2 text-yellow-300">
-                  💸 Ofertas em Lojas Digitais
+                  💸 Offers in Digital Stores
                 </h2>
-                <p className="text-green-400">Este jogo é gratuito!</p>
+                <p className="text-green-400">This game is free!</p>
               </div>
             ) : (
               <div className="mb-6 mt-8">
                 <h2 className="text-xl font-semibold mb-2 text-yellow-300">
-                  💸 Ofertas em Lojas Digitais
+                  💸 Offers in Digital Stores
                 </h2>
                 <div className="flex flex-col gap-3">
                   {priceData.offers.map((offer, i) => (
@@ -194,7 +194,7 @@ export default function GameDetails() {
                   ))}
                 </div>
                 <div className="mt-4 p-3 bg-gray-800 rounded-lg text-sm shadow-inner">
-                  📉 <strong>Menor preço histórico:</strong>{" "}
+                  📉 <strong>Lowest historical price:</strong>{" "}
                   <span className="text-green-400 font-bold">
                     ${priceData.lowestHistoricalPrice.price.toFixed(2)}
                   </span>{" "}
@@ -210,7 +210,7 @@ export default function GameDetails() {
           ) : null}
 
           <div className="mb-6">
-            <span className="text-sm text-gray-400">Outras lojas:</span>
+            <span className="text-sm text-gray-400">Other stores:</span>
             <div className="flex flex-wrap gap-3 mt-2">
               {uniqueStores.map((store) => {
                 const key = store.store.name
