@@ -37,19 +37,18 @@ export default function Home() {
 
         setSuggestions(sorted);
       } catch (error) {
-        console.error("Erro ao buscar sugestões:", error);
+        console.error("Error fetching suggestions:", error);
       }
     };
 
     fetchSuggestions();
   }, [searchTerm]);
 
- 
+
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setSuggestions([]);
-      setResults([]);
-      setHasSearched(false);
+     
     }
   }, [searchTerm]);
 
@@ -93,7 +92,7 @@ export default function Home() {
 
       setResults(sorted);
     } catch (error) {
-      console.error("Erro ao buscar jogos:", error);
+      console.error("Error fetching games:", error);
     } finally {
       setLoading(false);
     }

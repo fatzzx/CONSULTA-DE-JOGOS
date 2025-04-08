@@ -1,7 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="flex justify-between items-center p-6 border-b border-gray-800">
-      <h1 className="text-3xl font-extrabold tracking-wide bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
+      <h1
+        onClick={() => {
+          navigate(0); // recarrega a rota atual (reset visual)
+        }}
+        className="cursor-pointer text-3xl font-extrabold tracking-wide bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent"
+      >
         PlayWorth
       </h1>
 
