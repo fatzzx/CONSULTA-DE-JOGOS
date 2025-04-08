@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
+import { storeLogos } from "../utils/storeLogos";
 
 export default function GameDetails() {
   const { id } = useParams();
@@ -14,18 +15,24 @@ export default function GameDetails() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const gameRes = await fetch(`https://api.rawg.io/api/games/${id}?key=${RAWG_API_KEY}`);
+        const gameRes = await fetch(
+          `https://api.rawg.io/api/games/${id}?key=${RAWG_API_KEY}`
+        );
         const gameJson = await gameRes.json();
         setGame(gameJson);
 
         const normalizedName = gameJson.name.replace(/:/g, "").trim();
         const priceRes = await fetch(
-          `https://consulta-jogos-backend.vercel.app/api/gamePrice?name=${encodeURIComponent(normalizedName)}`
+          `https://consulta-jogos-backend.vercel.app/api/gamePrice?name=${encodeURIComponent(
+            normalizedName
+          )}`
         );
         const priceJson = await priceRes.json();
         setPriceData(!priceJson.error ? priceJson : { isFree: true });
 
-        const reviewsRes = await fetch(`https://api.rawg.io/api/games/${id}/reviews?key=${RAWG_API_KEY}`);
+        const reviewsRes = await fetch(
+          `https://api.rawg.io/api/games/${id}/reviews?key=${RAWG_API_KEY}`
+        );
         const reviewsJson = await reviewsRes.json();
         setReviews(reviewsJson.results || []);
       } catch (err) {
@@ -41,8 +48,8 @@ export default function GameDetails() {
   if (loading) return <Loading />;
   if (!game) return <div className="text-white p-4">Game not found.</div>;
 
-  const platforms = game.platforms?.map(p => p.platform.name).join(", ");
-  const genres = game.genres?.map(g => g.name).join(", ");
+  const platforms = game.platforms?.map((p) => p.platform.name).join(", ");
+  const genres = game.genres?.map((g) => g.name).join(", ");
   const releaseDate = new Date(game.released).toLocaleDateString("en-US");
 
   function getMetacriticColor(score) {
@@ -57,12 +64,22 @@ export default function GameDetails() {
       {/* Header */}
       <header className="px-6 py-5 border-b border-gray-800 flex justify-between items-center max-w-7xl mx-auto">
         <a href="/" className="flex items-center gap-2">
-          <img src="/logoplay.png" alt="PlayWorth Logo" className="h-14 w-auto" />
+          <img
+            src="/logoplay.png"
+            alt="PlayWorth Logo"
+            className="h-14 w-auto"
+          />
         </a>
         <nav className="flex gap-6 text-sm text-gray-300">
-          <a href="/" className="hover:text-white">Home</a>
-          <a href="/trending" className="hover:text-white">Trending</a>
-          <a href="/alerts" className="hover:text-white">Alerts</a>
+          <a href="/" className="hover:text-white">
+            Home
+          </a>
+          <a href="/trending" className="hover:text-white">
+            Trending
+          </a>
+          <a href="/alerts" className="hover:text-white">
+            Alerts
+          </a>
         </nav>
       </header>
 
@@ -76,7 +93,9 @@ export default function GameDetails() {
               <h1 className="text-3xl font-bold mb-2">{game.name}</h1>
               <p className="text-sm text-gray-400 mb-6">TAGS: {genres}</p>
 
-              <h2 className="text-md font-semibold text-gray-200 mb-2 uppercase tracking-wide">Description</h2>
+              <h2 className="text-md font-semibold text-gray-200 mb-2 uppercase tracking-wide">
+                Description
+              </h2>
               <p className="text-gray-300 leading-relaxed text-sm whitespace-pre-wrap mb-4">
                 {game.description_raw}
               </p>
@@ -87,8 +106,12 @@ export default function GameDetails() {
                   <p className="text-gray-400 mb-1">Rating:</p>
                   <p className="flex items-center gap-2">
                     <span className="text-yellow-400 text-lg">★</span>
-                    <span className="text-white font-semibold">{game.rating.toFixed(2)}</span>
-                    <span className="text-gray-400">/ 5 ({game.ratings_count} ratings)</span>
+                    <span className="text-white font-semibold">
+                      {game.rating.toFixed(2)}
+                    </span>
+                    <span className="text-gray-400">
+                      / 5 ({game.ratings_count} ratings)
+                    </span>
                   </p>
                 </div>
               )}
@@ -105,14 +128,52 @@ export default function GameDetails() {
               {game.metacritic && (
                 <div>
                   <p className="text-gray-400">METACRITIC</p>
-                  <p className={`${getMetacriticColor(game.metacritic)} font-semibold`}>
+                  <p
+                    className={`${getMetacriticColor(
+                      game.metacritic
+                    )} font-semibold`}
+                  >
                     {game.metacritic}
                   </p>
                 </div>
               )}
               <div>
-                <p className="text-gray-400">PLATFORMS</p>
-                <p className="max-w-[140px] truncate">{platforms}</p>
+                <p className="text-gray-400 mb-1">PLATFORMS</p>
+                <div className="flex gap-1 flex-wrap max-w-[160px] items-center">
+                  {(() => {
+                    const shown = new Set();
+
+                    return game.platforms
+                      ?.map((p) => {
+                        const name = p?.platform?.name?.toLowerCase() || "";
+                        let logoKey = "";
+
+                        if (name.includes("playstation"))
+                          logoKey = "playstation_store";
+                        else if (name.includes("xbox")) logoKey = "xbox_store";
+                        else if (name.includes("nintendo"))
+                          logoKey = "nintendo_store";
+                        else if (name.includes("pc")) logoKey = "pc";
+                        else if (name.includes("steam")) logoKey = "steam";
+
+                        if (logoKey && !shown.has(logoKey)) {
+                          shown.add(logoKey);
+                          return (
+                            <img
+                              key={logoKey}
+                              src={storeLogos[logoKey]}
+                              alt={logoKey}
+                              title={logoKey.replace("_", " ")}
+                              className="w-5 h-5 object-contain"
+                            />
+                          );
+                        }
+
+                        return null;
+                      })
+                      .filter(Boolean);
+                  })()}
+                </div>
               </div>
             </div>
 
@@ -127,14 +188,21 @@ export default function GameDetails() {
         {/* Price Section */}
         {priceData && (
           <div className="mt-10 bg-[#131c31] rounded-xl p-6 shadow-inner">
-            <h2 className="text-xl font-semibold text-yellow-300 mb-4">💸 Price & Deals</h2>
+            <h2 className="text-xl font-semibold text-yellow-300 mb-4">
+              💸 Price & Deals
+            </h2>
             {priceData.isFree ? (
-              <p className="text-green-400 font-medium">This game is free to play.</p>
+              <p className="text-green-400 font-medium">
+                This game is free to play.
+              </p>
             ) : (
               <>
                 <div className="space-y-3">
                   {priceData.offers.map((offer, i) => (
-                    <div key={i} className="flex justify-between items-center bg-gray-800 px-4 py-3 rounded-lg shadow-sm text-sm">
+                    <div
+                      key={i}
+                      className="flex justify-between items-center bg-gray-800 px-4 py-3 rounded-lg shadow-sm text-sm"
+                    >
                       <span className="font-medium">{offer.store}</span>
                       <div className="text-right">
                         {offer.currentPrice < offer.originalPrice && (
@@ -146,7 +214,9 @@ export default function GameDetails() {
                           ${offer.currentPrice.toFixed(2)}
                         </span>
                         {offer.discount && (
-                          <span className="ml-2 text-yellow-400">{offer.discount}</span>
+                          <span className="ml-2 text-yellow-400">
+                            {offer.discount}
+                          </span>
                         )}
                       </div>
                     </div>
@@ -159,7 +229,9 @@ export default function GameDetails() {
                   </span>{" "}
                   on{" "}
                   <span className="text-white">
-                    {new Date(priceData.lowestHistoricalPrice.date).toLocaleDateString("en-US")}
+                    {new Date(
+                      priceData.lowestHistoricalPrice.date
+                    ).toLocaleDateString("en-US")}
                   </span>
                 </div>
               </>
