@@ -4,7 +4,7 @@ export default function GameList({ games, loading, hasSearched }) {
   if (loading) {
     return (
       <div className="text-center text-white text-xl py-10">
-        Carregando jogos...
+        Loading games...
       </div>
     );
   }
@@ -12,7 +12,7 @@ export default function GameList({ games, loading, hasSearched }) {
   if (hasSearched && games.length === 0) {
     return (
       <div className="text-center text-white text-lg py-10">
-        Nenhum jogo encontrado.
+        No games found.
       </div>
     );
   }

@@ -19,11 +19,11 @@ export default function SearchSection({
   return (
     <section className="text-center py-20 px-6 relative">
       <h2 className="text-4xl md:text-5xl font-bold mb-4">
-        Descubra se o jogo vale a pena
+      Discover if the game is worth it
       </h2>
       <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
-        Compare tempo de campanha, preço e popularidade para tomar decisões
-        inteligentes antes de jogar.
+      Compare campaign length, price and popularity to make smarter choices before you play.
+
       </p>
 
       <div className="relative w-full max-w-2xl mx-auto">
@@ -33,7 +33,7 @@ export default function SearchSection({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Busque um jogo..."
+            placeholder="Search for a game..."
             className="flex-grow p-4 pl-12 pr-10 rounded-l-xl bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
 
@@ -44,7 +44,7 @@ export default function SearchSection({
                 setSuggestions([]);
               }}
               className="absolute right-28 top-3 text-gray-400 hover:text-white"
-              title="Limpar busca"
+              title="Clear search"
             >
               ✕
             </button>
@@ -57,7 +57,7 @@ export default function SearchSection({
             }}
             className="px-6 rounded-r-xl bg-sky-500 text-white hover:bg-sky-600 transition-colors"
           >
-            Buscar
+            Search
           </button>
 
           <svg

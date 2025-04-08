@@ -44,7 +44,7 @@ export default function Home() {
     fetchSuggestions();
   }, [searchTerm]);
 
-  // 👉 Limpa resultados se barra estiver vazia
+ 
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setSuggestions([]);

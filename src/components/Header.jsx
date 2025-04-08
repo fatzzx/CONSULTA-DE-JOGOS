@@ -7,13 +7,13 @@ export default function Header() {
 
       <nav className="space-x-6 text-lg">
         <a href="#" className="text-gray-300 hover:text-sky-400">
-          Início
+          Home
         </a>
         <a href="#" className="text-gray-300 hover:text-sky-400">
-          Comparar
+          Compare
         </a>
         <a href="#" className="text-gray-300 hover:text-sky-400">
-          Alertas
+          Alerts
         </a>
       </nav>
     </header>

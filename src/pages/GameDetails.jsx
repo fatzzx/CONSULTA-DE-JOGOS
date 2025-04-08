@@ -23,7 +23,7 @@ export default function GameDetails() {
         setGame(gameData);
         setStores(gameData.stores || []);
       } catch (err) {
-        console.error("Erro ao buscar detalhes do jogo:", err);
+        console.error("Error fetching game details:", err);
       } finally {
         setLoading(false);
       }
@@ -37,7 +37,7 @@ export default function GameDetails() {
         const data = await res.json();
         setReviews(data.results || []);
       } catch (err) {
-        console.error("Erro ao buscar reviews:", err);
+        console.error("Error fetching reviews:", err);
       }
     };
 
@@ -46,7 +46,7 @@ export default function GameDetails() {
   }, [id]);
 
   if (loading) return <Loading />;
-  if (!game) return <div className="text-white p-4">Jogo não encontrado.</div>;
+  if (!game) return <div className="text-white p-4">Game not found.</div>;
 
   const groupedPlatforms = {};
   game.platforms.forEach(({ platform }) => {
@@ -72,7 +72,7 @@ export default function GameDetails() {
         onClick={() => navigate(-1)}
         className="mb-6 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
       >
-        ← Voltar
+        ← Back
       </button>
 
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-start">
@@ -92,9 +92,9 @@ export default function GameDetails() {
           </p>
 
           <div className="mb-4">
-            <span className="text-sm text-gray-400">Avaliação:</span>
+            <span className="text-sm text-gray-400">Rating:</span>
             <p className="text-xl">
-              ⭐ {game.rating} / 5 ({game.ratings_count} avaliações)
+              ⭐ {game.rating} / 5 ({game.ratings_count} ratings)
             </p>
           </div>
 
@@ -106,7 +106,7 @@ export default function GameDetails() {
           )}
 
           <div className="mb-4">
-            <span className="text-sm text-gray-400">Gêneros:</span>
+            <span className="text-sm text-gray-400">Genres:</span>
             <div className="flex flex-wrap gap-2 mt-1">
               {game.genres.map((g) => (
                 <span
@@ -120,7 +120,7 @@ export default function GameDetails() {
           </div>
 
           <div className="mb-4">
-            <span className="text-sm text-gray-400">Plataformas:</span>
+            <span className="text-sm text-gray-400">Platforms:</span>
             <div className="flex flex-col gap-1 mt-1">
               {Object.entries(groupedPlatforms).map(([key, names]) => (
                 <div key={key} className="flex items-start gap-2">
@@ -132,7 +132,7 @@ export default function GameDetails() {
           </div>
 
           <div className="mb-6">
-            <span className="text-sm text-gray-400">Loja(s):</span>
+            <span className="text-sm text-gray-400">Store(s):</span>
             <div className="flex flex-wrap gap-3 mt-2">
               {uniqueStores.map((store) => {
                 const key = store.store.name
@@ -176,20 +176,19 @@ export default function GameDetails() {
         </div>
       )}
 
-      
       {reviews.length > 0 && (
         <div className="max-w-5xl mx-auto mt-12">
-          <h2 className="text-2xl font-semibold mb-4">Opiniões dos jogadores</h2>
+          <h2 className="text-2xl font-semibold mb-4">Player Reviews</h2>
           <ul className="space-y-4">
             {reviews.slice(0, 5).map((review) => (
               <li key={review.id} className="bg-gray-800 p-4 rounded-xl shadow">
                 <p className="text-sm text-gray-400 mb-2">
-                  {review.user ? review.user.username : "Anônimo"} disse:
+                  {review.user ? review.user.username : "Anonymous"} said:
                 </p>
                 <div
                   className="text-lg space-y-2"
                   dangerouslySetInnerHTML={{
-                    __html: review.text || "Sem texto disponível para esta review.",
+                    __html: review.text || "No review available.",
                   }}
                 ></div>
               </li>
