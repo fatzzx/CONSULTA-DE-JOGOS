@@ -198,11 +198,11 @@ export default function GameDetails() {
                   <span className="text-green-400 font-bold">
                     ${priceData.lowestHistoricalPrice.price.toFixed(2)}
                   </span>{" "}
-                  em{" "}
+                  on{" "}
                   <span className="text-white font-medium">
                     {new Date(
                       priceData.lowestHistoricalPrice.date
-                    ).toLocaleDateString("pt-BR")}
+                    ).toLocaleDateString("en-US")}
                   </span>
                 </div>
               </div>
