@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { storeLogos } from "../utils/storeLogos";
+import Footer from "../components/Footer";
+
 
 export default function GameDetails() {
   const { id } = useParams();
@@ -278,6 +280,8 @@ export default function GameDetails() {
           </div>
         )}
       </main>
+      <Footer />
+
     </div>
   );
 }
