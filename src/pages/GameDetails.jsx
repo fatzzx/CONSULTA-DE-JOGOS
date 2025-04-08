@@ -43,7 +43,7 @@ export default function GameDetails() {
 
   const platforms = game.platforms?.map(p => p.platform.name).join(", ");
   const genres = game.genres?.map(g => g.name).join(", ");
-  const releaseDate = new Date(game.released).toLocaleDateString("en-GB");
+  const releaseDate = new Date(game.released).toLocaleDateString("en-US");
 
   function getMetacriticColor(score) {
     if (score >= 85) return "text-green-400";
@@ -159,7 +159,7 @@ export default function GameDetails() {
                   </span>{" "}
                   on{" "}
                   <span className="text-white">
-                    {new Date(priceData.lowestHistoricalPrice.date).toLocaleDateString("en-GB")}
+                    {new Date(priceData.lowestHistoricalPrice.date).toLocaleDateString("en-US")}
                   </span>
                 </div>
               </>
@@ -189,7 +189,7 @@ export default function GameDetails() {
                       </p>
                       {review.created && (
                         <p className="text-xs text-gray-400">
-                          {new Date(review.created).toLocaleDateString("en-GB")}
+                          {new Date(review.created).toLocaleDateString("en-US")}
                         </p>
                       )}
                     </div>
