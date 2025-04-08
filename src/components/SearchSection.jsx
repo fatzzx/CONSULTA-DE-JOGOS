@@ -19,11 +19,10 @@ export default function SearchSection({
   return (
     <section className="text-center py-20 px-6 relative">
       <h2 className="text-4xl md:text-5xl font-bold mb-4">
-      Discover if the game is worth it
+        Discover if the game is worth it
       </h2>
       <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
-      Compare campaign length, price and popularity to make smarter choices before you play.
-
+        Compare campaign length, price and popularity to make smarter choices before you play.
       </p>
 
       <div className="relative w-full max-w-2xl mx-auto">
@@ -39,9 +38,11 @@ export default function SearchSection({
 
           {searchTerm && (
             <button
+              type="button"
               onClick={() => {
                 setSearchTerm("");
                 setSuggestions([]);
+                // 👇 mantemos os resultados renderizados
               }}
               className="absolute right-28 top-3 text-gray-400 hover:text-white"
               title="Clear search"
@@ -51,6 +52,7 @@ export default function SearchSection({
           )}
 
           <button
+            type="button"
             onClick={() => {
               setSuggestions([]);
               onSearch();
