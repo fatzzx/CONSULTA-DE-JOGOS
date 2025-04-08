@@ -11,6 +11,7 @@ export default function GameDetails() {
   const [loading, setLoading] = useState(true);
   const [stores, setStores] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [priceData, setPriceData] = useState(null);
   const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
   useEffect(() => {
@@ -22,8 +23,29 @@ export default function GameDetails() {
         const gameData = await gameRes.json();
         setGame(gameData);
         setStores(gameData.stores || []);
+
+        const normalizedName = gameData.name.replace(/:/g, "").trim();
+        console.log("Normalized game name:", normalizedName);
+
+        const priceRes = await fetch(
+          `https://consulta-jogos-backend.vercel.app/api/gamePrice?name=${encodeURIComponent(
+            normalizedName
+          )}`
+        );
+        const priceJson = await priceRes.json();
+        console.log("Game name sent:", normalizedName);
+        console.log("Price API response:", priceJson);
+        if (!priceJson.error) {
+          setPriceData(priceJson);
+          console.log("Price data set:", priceJson);
+        } else {
+          console.log("Price API error:", priceJson.error);
+          if (priceJson.error === "Game not found.") {
+            setPriceData({ isFree: true });
+          }
+        }
       } catch (err) {
-        console.error("Error fetching game details:", err);
+        console.error("Error fetching game details or price data:", err);
       } finally {
         setLoading(false);
       }
@@ -65,6 +87,8 @@ export default function GameDetails() {
   const uniqueStores = Array.from(
     new Map(stores.map((s) => [s.store.name, s])).values()
   );
+
+  console.log("Rendering with priceData:", priceData);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-6">
@@ -131,8 +155,62 @@ export default function GameDetails() {
             </div>
           </div>
 
+          {priceData ? (
+            priceData.isFree ? (
+              <div className="mb-6 mt-8">
+                <h2 className="text-xl font-semibold mb-2 text-yellow-300">
+                  💸 Ofertas em Lojas Digitais
+                </h2>
+                <p className="text-green-400">Este jogo é gratuito!</p>
+              </div>
+            ) : (
+              <div className="mb-6 mt-8">
+                <h2 className="text-xl font-semibold mb-2 text-yellow-300">
+                  💸 Ofertas em Lojas Digitais
+                </h2>
+                <div className="flex flex-col gap-3">
+                  {priceData.offers.map((offer, i) => (
+                    <div
+                      key={i}
+                      className="flex justify-between items-center bg-gray-800 px-4 py-3 rounded-lg shadow-sm text-sm"
+                    >
+                      <span className="font-medium">{offer.store}</span>
+                      <div className="text-right">
+                        {offer.currentPrice < offer.originalPrice && (
+                          <span className="line-through text-gray-400 mr-2">
+                            ${offer.originalPrice.toFixed(2)}
+                          </span>
+                        )}
+                        <span className="text-green-400 font-semibold">
+                          ${offer.currentPrice.toFixed(2)}
+                        </span>
+                        {offer.currentPrice < offer.originalPrice && (
+                          <span className="ml-2 text-yellow-400 font-medium">
+                            {offer.discount}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 p-3 bg-gray-800 rounded-lg text-sm shadow-inner">
+                  📉 <strong>Menor preço histórico:</strong>{" "}
+                  <span className="text-green-400 font-bold">
+                    ${priceData.lowestHistoricalPrice.price.toFixed(2)}
+                  </span>{" "}
+                  em{" "}
+                  <span className="text-white font-medium">
+                    {new Date(
+                      priceData.lowestHistoricalPrice.date
+                    ).toLocaleDateString("pt-BR")}
+                  </span>
+                </div>
+              </div>
+            )
+          ) : null}
+
           <div className="mb-6">
-            <span className="text-sm text-gray-400">Store(s):</span>
+            <span className="text-sm text-gray-400">Outras lojas:</span>
             <div className="flex flex-wrap gap-3 mt-2">
               {uniqueStores.map((store) => {
                 const key = store.store.name
