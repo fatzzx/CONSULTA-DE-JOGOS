@@ -37,36 +37,51 @@ export default function GameList({ games, loading, hasSearched }) {
   return (
     <section className="px-6 pb-20">
       {hasSearched && games.length > 0 && (
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-6 text-white">
-          <div>
-            <label className="mr-2">Nota mínima:</label>
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-6 text-white w-full flex-wrap">
+          
+          {/* Nota mínima com slider */}
+          <div className="flex items-center gap-4 w-full max-w-md">
+            <label htmlFor="minRatingSlider" className="text-sm font-medium whitespace-nowrap">
+              Nota mínima:
+            </label>
             <input
-              type="number"
+              id="minRatingSlider"
+              type="range"
               min={0}
               max={5}
               step={0.1}
               value={minRating}
               onChange={(e) => setMinRating(parseFloat(e.target.value))}
-              className="bg-gray-800 text-white p-2 rounded w-24"
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
             />
+            <span className="text-sm text-sky-400 font-semibold w-10 text-center">
+              {minRating.toFixed(1)}
+            </span>
           </div>
 
-          <div className="flex gap-2">
-            <button
-              onClick={() => setSortByRating((prev) => !prev)}
-              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition"
+          {/* Ordenar por nota com select estilizado */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
+            <label htmlFor="sortOrder" className="text-sm font-medium whitespace-nowrap">
+              Ordenar:
+            </label>
+            <select
+              id="sortOrder"
+              value={sortByRating ? (sortDesc ? "desc" : "asc") : "none"}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === "none") {
+                  setSortByRating(false);
+                } else {
+                  setSortByRating(true);
+                  setSortDesc(value === "desc");
+                }
+              }}
+              className="bg-gray-800 text-white rounded px-4 py-2 border border-gray-600 focus:outline-none focus:border-sky-500"
             >
-              {sortByRating ? "Cancelar ordenação" : "Ordenar por nota"}
-            </button>
-
-            {sortByRating && (
-              <button
-                onClick={() => setSortDesc((prev) => !prev)}
-                className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded transition"
-              >
-                {sortDesc ? "Maior → Menor" : "Menor → Maior"}
-              </button>
-            )}
+              <option value="none">Sem ordenação</option>
+              <option value="desc">Nota (maior → menor)</option>
+              <option value="asc">Nota (menor → maior)</option>
+            </select>
           </div>
         </div>
       )}
