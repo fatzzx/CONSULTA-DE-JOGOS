@@ -17,7 +17,7 @@ export default function SearchSection({
   };
 
   return (
-    <section className="text-center py-20 px-6 relative">
+    <section className="bg-[#121212] text-center py-20 px-6 relative">
       <h2 className="text-4xl md:text-5xl font-bold mb-4">
         Discover if the game is worth it
       </h2>
@@ -42,7 +42,6 @@ export default function SearchSection({
               onClick={() => {
                 setSearchTerm("");
                 setSuggestions([]);
-                // 👇 mantemos os resultados renderizados
               }}
               className="absolute right-28 top-3 text-gray-400 hover:text-white"
               title="Clear search"
@@ -57,7 +56,7 @@ export default function SearchSection({
               setSuggestions([]);
               onSearch();
             }}
-            className="px-6 rounded-r-xl bg-sky-500 text-white hover:bg-sky-600 transition-colors"
+            className="px-6 rounded-r-xl bg-gray-700 text-white hover:bg-sky-600 transition-colors"
           >
             Search
           </button>
