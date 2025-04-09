@@ -1,4 +1,4 @@
-// src/components/PlatformIcon.jsx
+
 export default function PlatformIcon({ name }) {
   if (/playstation/i.test(name)) return <span>🎮</span>;
   if (/xbox/i.test(name)) return <span>🟩</span>;

@@ -39,7 +39,7 @@ export default function GameList({ games, loading, hasSearched }) {
       {hasSearched && games.length > 0 && (
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-6 text-white w-full flex-wrap">
           
-          {/* Nota mínima com slider */}
+       
           <div className="flex items-center gap-4 w-full max-w-md">
             <label htmlFor="minRatingSlider" className="text-sm font-medium whitespace-nowrap">
               Nota mínima:
@@ -59,7 +59,7 @@ export default function GameList({ games, loading, hasSearched }) {
             </span>
           </div>
 
-          {/* Ordenar por nota com select estilizado */}
+          
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
             <label htmlFor="sortOrder" className="text-sm font-medium whitespace-nowrap">
               Ordenar:
@@ -86,7 +86,7 @@ export default function GameList({ games, loading, hasSearched }) {
         </div>
       )}
 
-      {/* Lista de jogos */}
+      
       <div className="flex flex-wrap justify-center gap-8">
         {filteredGames.map((game, idx) => (
           <GameCard

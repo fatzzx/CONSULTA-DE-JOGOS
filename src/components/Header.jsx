@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header className="w-full px-6 py-4  border-gray-800 bg-[#121212]">
       <div className="flex justify-between items-center">
-        {/* Logo */}
+        
         <div
           onClick={() => navigate("/")}
           className="flex items-center gap-2 cursor-pointer transition-transform duration-200 hover:scale-105"

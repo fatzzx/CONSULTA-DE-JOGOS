@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import GameDetails from "./pages/GameDetails";
-import Trending from "./pages/Trending"; // 👈 novo import
+import Trending from "./pages/Trending"; 
 
 export default function App() {
   return (
