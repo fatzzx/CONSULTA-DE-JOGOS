@@ -19,15 +19,12 @@ export default function Header() {
           <img src="/logoplay.png" alt="PlayWorth Logo" className="h-10" />
         </div>
 
-        {/* Desktop nav */}
+       
         <nav className="hidden md:flex space-x-6 text-lg">
-          <a href="/" className="text-gray-300 hover:text-sky-400">Home</a>
-          <a href="/compare" className="text-gray-300 hover:text-sky-400">Compare</a>
-          <a href="/alerts" className="text-gray-300 hover:text-sky-400">Alerts</a>
           <a href="/trending" className="text-gray-300 hover:text-sky-400">Trending</a>
         </nav>
 
-        {/* Mobile menu icon */}
+       
         <button
           className="md:hidden text-gray-300 focus:outline-none"
           onClick={toggleMenu}
@@ -36,12 +33,9 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile nav dropdown */}
+     
       {menuOpen && (
         <div className="md:hidden mt-4 flex flex-col space-y-3 text-lg">
-          <a href="/" className="text-gray-300 hover:text-sky-400">Home</a>
-          <a href="/compare" className="text-gray-300 hover:text-sky-400">Compare</a>
-          <a href="/alerts" className="text-gray-300 hover:text-sky-400">Alerts</a>
           <a href="/trending" className="text-gray-300 hover:text-sky-400">Trending</a>
         </div>
       )}

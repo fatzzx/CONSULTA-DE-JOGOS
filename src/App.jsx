@@ -9,7 +9,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/jogo/:id" element={<GameDetails />} />
-        <Route path="/trending" element={<Trending />} /> {/* 👈 nova rota */}
+        <Route path="/trending" element={<Trending />} /> 
       </Routes>
     </Router>
   );
