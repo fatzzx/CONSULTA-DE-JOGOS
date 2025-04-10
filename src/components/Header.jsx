@@ -1,30 +1,35 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 export default function Header() {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
     <header className="w-full px-6 py-4 border-gray-800 bg-[#121212]">
       <div className="flex justify-between items-center">
-        {/* ✅ USANDO LINK PARA VOLTAR AO HOME */}
-        <Link
-          to="/"
+        
+        <div
+          onClick={() => navigate("/")}
           className="flex items-center gap-2 cursor-pointer transition-transform duration-200 hover:scale-105"
         >
           <img src="/logoplay.png" alt="PlayWorth Logo" className="h-10" />
-        </Link>
+        </div>
 
-        {/* Navegação desktop */}
+      
         <nav className="hidden md:flex space-x-6 text-lg">
-          <Link to="/trending" className="text-gray-300 hover:text-sky-400">
+          <span
+            onClick={() => navigate("/trending")}
+            className="text-gray-300 hover:text-sky-400 cursor-pointer"
+          >
             Trending
-          </Link>
+          </span>
         </nav>
 
-        {/* Menu mobile */}
+     
         <button
           className="md:hidden text-gray-300 focus:outline-none"
           onClick={toggleMenu}
@@ -33,15 +38,12 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Navegação mobile */}
+     
       {menuOpen && (
         <div className="md:hidden mt-4 flex flex-col space-y-3 text-lg">
-          <Link to="/" className="text-gray-300 hover:text-sky-400">
-            Home
-          </Link>
-          <Link to="/trending" className="text-gray-300 hover:text-sky-400">
+          <span onClick={() => navigate("/trending")} className="text-gray-300 hover:text-sky-400 cursor-pointer">
             Trending
-          </Link>
+          </span>
         </div>
       )}
     </header>
