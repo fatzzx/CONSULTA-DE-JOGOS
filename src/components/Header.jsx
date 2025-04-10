@@ -11,15 +11,18 @@ export default function Header() {
   return (
     <header className="w-full px-6 py-4 border-gray-800 bg-[#121212]">
       <div className="flex justify-between items-center">
-        
         <div
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/", { replace: true });
+            window.location.reload();
+          }}
           className="flex items-center gap-2 cursor-pointer transition-transform duration-200 hover:scale-105"
+          title="Voltar para a Home"
+          aria-label="Logo Gameworth, clique para voltar para a Home"
         >
-          <img src="/logoplay.png" alt="PlayWorth Logo" className="h-10" />
+          <img src="/logoplay.png" alt="Gameworth Logo" className="h-10" />
         </div>
 
-      
         <nav className="hidden md:flex space-x-6 text-lg">
           <span
             onClick={() => navigate("/trending")}
@@ -29,7 +32,6 @@ export default function Header() {
           </span>
         </nav>
 
-     
         <button
           className="md:hidden text-gray-300 focus:outline-none"
           onClick={toggleMenu}
@@ -38,10 +40,12 @@ export default function Header() {
         </button>
       </div>
 
-     
       {menuOpen && (
         <div className="md:hidden mt-4 flex flex-col space-y-3 text-lg">
-          <span onClick={() => navigate("/trending")} className="text-gray-300 hover:text-sky-400 cursor-pointer">
+          <span
+            onClick={() => navigate("/trending")}
+            className="text-gray-300 hover:text-sky-400 cursor-pointer"
+          >
             Trending
           </span>
         </div>
