@@ -26,8 +26,8 @@ export default function Header() {
         <nav className="hidden md:flex space-x-6 text-lg">
           <span
             onClick={() => navigate("/trending")}
-            className="text-gray-300 hover:text-sky-400 cursor-pointer"
-          >
+            className="cursor-pointer text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-sky-400 hover:to-blue-500 transition duration-300"
+            >
             Trending
           </span>
         </nav>
