@@ -33,7 +33,7 @@ export default function SearchSection({
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search for a game..."
-            className="flex-grow p-4 pl-12 pr-10 rounded-l-xl bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+            className="flex-grow p-4 pl-12 pr-10 rounded-l-xl bg-[#1b1b1b] text-white border-none focus:outline-none"
           />
 
           {searchTerm && (
@@ -56,7 +56,7 @@ export default function SearchSection({
               setSuggestions([]);
               onSearch();
             }}
-            className="px-6 rounded-r-xl bg-gray-700 text-white hover:bg-sky-600 transition-colors"
+            className="px-6 rounded-r-xl bg-[#2f384d] text-white hover:bg-sky-600 transition-colors"
           >
             Search
           </button>
@@ -77,7 +77,7 @@ export default function SearchSection({
         </div>
 
         {searchTerm.length >= 3 && suggestions.length > 0 && (
-          <ul className="absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-b-xl z-10 max-h-60 overflow-y-auto">
+          <ul className="absolute top-full left-0 right-0 bg-[#1b1b1b] border border-gray-700 rounded-b-xl z-10 max-h-60 overflow-y-auto">
             {suggestions.slice(0, 5).map((game) => (
               <li
                 key={game.id}

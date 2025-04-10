@@ -22,7 +22,7 @@ export default function GameCard({ title, genres, rating, image, id }) {
           className="w-full h-40 object-cover group-hover:brightness-110 transition" 
         />
       )}
-      <div className="p-4 flex flex-col flex-grow">
+      <div className="p-4 flex flex-col flex-grow bg-[#1b1b1b]">
         <h3 className="text-white text-xl font-semibold">{title}</h3>
         <div className="text-gray-400 mt-2 mb-4 flex-grow space-y-1">
           <p className="whitespace-pre-line">{genres}</p>

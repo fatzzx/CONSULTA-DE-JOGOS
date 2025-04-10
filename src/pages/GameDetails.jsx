@@ -48,10 +48,13 @@ export default function GameDetails() {
   const releaseDate = new Date(game.released).toLocaleDateString("en-US");
 
   function getMetacriticColor(score) {
-    if (score >= 85) return "text-green-400";
-    if (score >= 70) return "text-yellow-400";
-    if (score >= 50) return "text-orange-400";
-    return "text-red-500";
+    if (score >= 90) return "text-green-400";      
+    if (score >= 80) return "text-lime-400";        
+    if (score >= 70) return "text-yellow-400";      
+    if (score >= 60) return "text-amber-400";       
+    if (score >= 50) return "text-orange-400";      
+    if (score >= 40) return "text-orange-500";      
+    return "text-red-500";                          
   }
 
   return (
