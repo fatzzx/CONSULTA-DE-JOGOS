@@ -6,24 +6,6 @@ body {
   color: #fff;
 }
 
-.accent-text {
-  background: linear-gradient(90deg, #38bdf8, #6366f1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.gradient-btn {
-  background: linear-gradient(90deg, #38bdf8, #6366f1);
-}
-
-
 input::-webkit-search-cancel-button {
   -webkit-appearance: none;
   display: none;

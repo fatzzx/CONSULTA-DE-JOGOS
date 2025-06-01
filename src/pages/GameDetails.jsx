@@ -4,7 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
+import FavoriteButton from "../components/FavoriteButton";
 import { storeLogos } from "../utils/storeLogos";
+import { gamesAPI } from "../utils/api";
 
 export default function GameDetails() {
   const { id } = useParams();
@@ -13,7 +15,6 @@ export default function GameDetails() {
   const [loading, setLoading] = useState(true);
   const [priceData, setPriceData] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [favorited, setFavorited] = useState(false);
   const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
   useEffect(() => {
@@ -25,14 +26,9 @@ export default function GameDetails() {
         const gameJson = await gameRes.json();
         setGame(gameJson);
 
-        const normalizedName = gameJson.name.replace(/:/g, "").trim();
-        const priceRes = await fetch(
-          `https://consulta-jogos-backend.vercel.app/api/gamePrice?name=${encodeURIComponent(
-            normalizedName
-          )}`
-        );
-        const priceJson = await priceRes.json();
-        setPriceData(!priceJson.error ? priceJson : { isFree: true });
+        // Usar a função centralizada para buscar preços
+        const priceData = await gamesAPI.getPrice(gameJson.name);
+        setPriceData(priceData);
 
         const reviewsRes = await fetch(
           `https://api.rawg.io/api/games/${id}/reviews?key=${RAWG_API_KEY}`
@@ -54,6 +50,15 @@ export default function GameDetails() {
 
   const genres = game.genres?.map((g) => g.name).join(", ");
   const releaseDate = new Date(game.released).toLocaleDateString("en-US");
+
+  // Formatação do jogo para o FavoriteButton
+  const gameData = {
+    id: parseInt(game.id),
+    title: game.name,
+    name: game.name,
+    image: game.background_image,
+    background_image: game.background_image,
+  };
 
   function getMetacriticColor(score) {
     if (score >= 90) return "text-green-400";
@@ -100,24 +105,15 @@ export default function GameDetails() {
 
       <main className="px-6 max-w-7xl mx-auto">
         <div className="relative bg-[#1b1b1b] rounded-2xl px-6 py-8 mb-16 shadow-lg">
-          <button
-            onClick={() => setFavorited(!favorited)}
-            className="absolute top-6 right-6 z-10 transition-transform duration-200 hover:scale-110 active:scale-95 cursor-pointer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill={favorited ? "red" : "none"}
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-          </button>
+          {/* Botão de favorito usando o componente FavoriteButton */}
+          <div className="absolute top-6 right-6 z-10">
+            <FavoriteButton
+              game={gameData}
+              size="large"
+              showText={true}
+              className="shadow-lg"
+            />
+          </div>
 
           <div className="pb-6">
             <h1 className="text-5xl font-bold mb-2">{game.name}</h1>
