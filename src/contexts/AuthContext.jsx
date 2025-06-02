@@ -16,26 +16,28 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Verificar se há um token válido ao carregar a aplicação
-    const checkAuth = () => {
-      if (isAuthenticated()) {
-        // Aqui você pode fazer uma requisição para obter dados do usuário
-        // Por enquanto, vamos apenas definir que o usuário está logado
-        setUser({ authenticated: true });
-      }
-      setLoading(false);
-    };
+    const storedUser = localStorage.getItem("user");
 
-    checkAuth();
+    if (isAuthenticated() && storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (err) {
+        console.error("Erro ao carregar user do localStorage:", err);
+      }
+    }
+
+    setLoading(false);
   }, []);
 
-const login = ({ token, user }) => {
+  const login = ({ token, user }) => {
     setToken(token);
     setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
   };
 
   const logout = () => {
     removeToken();
+    localStorage.removeItem("user");
     setUser(null);
   };
 
