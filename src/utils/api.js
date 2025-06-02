@@ -5,9 +5,7 @@ const normalizeUrl = (baseUrl, endpoint) => {
   return base + path;
 };
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://consulta-jogos-backend-r5zr.vercel.app/api";
+const API_BASE_URL = "https://consulta-jogos-backend-hnh4.vercel.app/";
 
 // Função para obter o token do localStorage
 export const getToken = () => {
