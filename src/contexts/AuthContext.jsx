@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = (userData) => {
+const login = ({ token, user }) => {
     setToken(token);
     setUser(user);
   };
