@@ -8,7 +8,8 @@ export default function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+const { isAuthenticated, logout, loading } = useAuth();
+  if (loading) return null;
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const toggleUserMenu = () => setUserMenuOpen((prev) => !prev);
