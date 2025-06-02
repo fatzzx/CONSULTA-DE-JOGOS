@@ -20,7 +20,7 @@ Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 # Obtenha sua chave gratuita em: https://rawg.io/apidocs
 VITE_RAWG_API_KEY=your_rawg_api_key_here
 
-# URL do Backend (opcional) - deixe vazio para usar o backend em produção
+# URL do Backend (opcional) - deixe vazio para usar o backend em produçã
 # VITE_API_BASE_URL=http://localhost:5000/api
 ```
 
