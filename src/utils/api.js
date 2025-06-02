@@ -40,10 +40,14 @@ export const apiRequest = async (endpoint, options = {}) => {
 
   try {
     const response = await fetch(url, config);
-    const data = await response.json();
+
+    // ⚠️ Se a resposta não for JSON, evita erro com "<!DOCTYPE"...
+    const contentType = response.headers.get("Content-Type");
+    const isJson = contentType && contentType.includes("application/json");
+    const data = isJson ? await response.json() : null;
 
     if (!response.ok) {
-      throw new Error(data.message || "Erro na requisição");
+      throw new Error(data?.message || "Erro na requisição");
     }
 
     return data;
@@ -61,7 +65,7 @@ export const authAPI = {
   },
 
   login: async (credentials) => {
-    const data = await apiRequest("/users/login", {
+    const data = await apiRequest("/api/users/login", {
       method: "POST",
       body: JSON.stringify(credentials),
     });
@@ -87,7 +91,7 @@ export const gamesAPI = {
       size: size.toString(),
     });
 
-    return apiRequest(`/rawg/search?${queryParams}`);
+    return apiRequest(`/api/rawg/search?${queryParams}`);
   },
 
   getPrice: async (gameName) => {
@@ -95,7 +99,7 @@ export const gamesAPI = {
     try {
       const url = normalizeUrl(
         API_BASE_URL,
-        `/gamePrice?name=${encodeURIComponent(normalizedName)}`
+        `/api/gamePrice?name=${encodeURIComponent(normalizedName)}`
       );
       const response = await fetch(url);
       const data = await response.json();
@@ -109,18 +113,18 @@ export const gamesAPI = {
 
 export const favoritesAPI = {
   getFavorites: async () => {
-    return apiRequest("/favorites");
+    return apiRequest("/api/favorites");
   },
 
   addFavorite: async (gameData) => {
-    return apiRequest("/favorites", {
+    return apiRequest("/api/favorites", {
       method: "POST",
       body: JSON.stringify(gameData),
     });
   },
 
   removeFavorite: async (favoriteId) => {
-    return apiRequest(`/favorites/${favoriteId}`, {
+    return apiRequest(`/api/favorites/${favoriteId}`, {
       method: "DELETE",
     });
   },
