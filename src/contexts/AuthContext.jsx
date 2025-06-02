@@ -30,7 +30,8 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    setUser(userData);
+    setToken(token);
+    setUser(user);
   };
 
   const logout = () => {
