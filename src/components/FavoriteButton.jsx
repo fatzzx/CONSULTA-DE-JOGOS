@@ -38,7 +38,7 @@ export default function FavoriteButton({
   const checkIfFavorite = async () => {
     try {
       const data = await favoritesAPI.getFavorites();
-      cconst userFavorites = data || [];
+      const userFavorites = data || [];
       setFavorites(userFavorites);
 
       const isFav = userFavorites.some(
