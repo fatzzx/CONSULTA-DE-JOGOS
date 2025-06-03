@@ -70,7 +70,7 @@ const { isAuthenticated, logout, loading } = useAuth();
                 </button>
 
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2 border border-gray-700">
+                    <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2 border border-gray-700 z-50">
                     <button
                       onClick={() => handleNavigation("/favorites")}
                       className="w-full px-4 py-2 text-left hover:bg-gray-700 transition-colors flex items-center gap-2"
@@ -122,7 +122,7 @@ const { isAuthenticated, logout, loading } = useAuth();
       {userMenuOpen && (
         <div
           className="fixed inset-0 z-40"
-          onClick={() => setUserMenuOpen(false)}
+           onMouseDown={() => setUserMenuOpen(false)}
         />
       )}
 
