@@ -30,7 +30,7 @@ export default function Favorites() {
       setLoading(true);
       setError("");
       const data = await favoritesAPI.getFavorites();
-      setFavorites(data.favorites || []);
+      setFavorites(data || []);
     } catch (error) {
       setError(error.message || "Erro ao carregar favoritos");
       console.error("Error fetching favorites:", error);

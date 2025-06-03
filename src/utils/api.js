@@ -41,7 +41,6 @@ export const apiRequest = async (endpoint, options = {}) => {
   try {
     const response = await fetch(url, config);
 
-    // ⚠️ Se a resposta não for JSON, evita erro com "<!DOCTYPE"...
     const contentType = response.headers.get("Content-Type");
     const isJson = contentType && contentType.includes("application/json");
     const data = isJson ? await response.json() : null;
