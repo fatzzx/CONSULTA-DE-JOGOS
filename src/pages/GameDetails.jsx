@@ -167,12 +167,9 @@ export default function GameDetails() {
               <div>
                 <h3 className="text-gray-400 text-sm uppercase mb-1">PRICE</h3>
                 <p className="font-medium">
-                  {priceData && !priceData.isFree
-                    ? `$ ${
-                        priceData.offers?.[0]?.currentPrice?.toFixed(2) ||
-                        "0.00"
-                      }`
-                    : "FREE"}
+                  {priceData && priceData.offers?.length > 0
+  ? `$ ${priceData.offers[0].currentPrice.toFixed(2)}`
+  : <span className="text-gray-400 italic">Unavailable</span>}
                 </p>
               </div>
             </div>

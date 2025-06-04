@@ -94,7 +94,11 @@ export const gamesAPI = {
   },
 
   getPrice: async (gameName) => {
-    const normalizedName = gameName.replace(/:/g, "").trim();
+    const normalizedName = gameName
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/gi, "") 
+      .replace(/\s+/g, " ")        
+      .trim();
     try {
       const url = normalizeUrl(
         API_BASE_URL,
