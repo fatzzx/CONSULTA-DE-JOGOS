@@ -116,23 +116,7 @@ export default function GameDetails() {
   />
 </div>
 
-          <div className="pb-6">
-            <h1 className="text-5xl font-bold mb-2">{game.name}</h1>
-            <p className="text-sm text-gray-400">TAGS: {genres}</p>
-            {game.rating && (
-              <div className="mt-3 text-sm">
-                <p className="flex items-center gap-2">
-                  <span className="text-yellow-400 text-lg">★</span>
-                  <span className="text-white font-semibold">
-                    {game.rating.toFixed(2)}
-                  </span>
-                  <span className="text-gray-400">
-                    / 5 ({game.ratings_count} ratings)
-                  </span>
-                </p>
-              </div>
-            )}
-          </div>
+          
 
           <div className="py-4 mb-8">
             <div className="flex flex-wrap justify-between text-center gap-6">

@@ -25,35 +25,46 @@ export default function SearchSection({
         Compare campaign length, price and popularity to make smarter choices before you play.
       </p>
 
-      <div className="relative w-full max-w-2xl mx-auto">
-        <div className="flex relative">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Search for a game..."
-            className="flex-grow p-4 pl-12 pr-10 rounded-l-xl bg-[#1b1b1b] text-white border-none focus:outline-none"
-          />
+      <div className="relative w-full max-w-2xl mx-auto overflow-hidden">
+        <div className="flex w-full">
+          <div className="relative flex-grow">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Search for a game..."
+              className="w-full p-4 pl-12 pr-10 rounded-l-xl bg-[#1b1b1b] text-white border-none focus:outline-none"
+            />
 
-          {searchTerm && (
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchTerm("");
+                  setSuggestions([]);
+                }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                title="Clear search"
+              >
+                ✕
+              </button>
+            )}
 
-<button
-  type="button"
-  onClick={() => {
-    setSearchTerm("");
-    setSuggestions([]);
-  }}
-  className="absolute right-20 sm:right-28 top-3 text-gray-400 hover:text-white"
-  title="Clear search"
->
-  ✕
-</button>
-
-           
-
-
-          )}
+            <svg
+              className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-500 w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18.5a7.5 7.5 0 006.15-3.85z"
+              />
+            </svg>
+          </div>
 
           <button
             type="button"
@@ -65,20 +76,6 @@ export default function SearchSection({
           >
             Search
           </button>
-
-          <svg
-            className="absolute top-3 left-4 text-gray-500 w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18.5a7.5 7.5 0 006.15-3.85z"
-            />
-          </svg>
         </div>
 
         {searchTerm.length >= 3 && suggestions.length > 0 && (
