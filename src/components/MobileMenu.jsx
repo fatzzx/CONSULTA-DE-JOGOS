@@ -30,7 +30,7 @@ export default function MobileMenu({
       <button
         onClick={() => setMenuOpen(false)}
         className="absolute top-6 right-6 text-white"
-        aria-label="Fechar Menu"
+        aria-label="Close Menu"
       >
         <X size={36} />
       </button>
@@ -58,13 +58,13 @@ export default function MobileMenu({
                 }`}
             >
               <Star className="w-6 h-6" />
-              Favoritos
+              Favorites
             </span>
 
             <div className="flex flex-col items-center space-y-4 pt-4 border-t border-gray-600">
               <div className="flex items-center gap-3 text-gray-300">
                 <User className="w-6 h-6" />
-                <span className="text-lg">Perfil</span>
+                <span className="text-lg">Profile</span>
               </div>
 
               <button
@@ -77,7 +77,7 @@ export default function MobileMenu({
                   }`}
               >
                 <LogOut className="w-6 h-6" />
-                Sair
+                Logout
               </button>
             </div>
           </>
@@ -93,7 +93,7 @@ export default function MobileMenu({
                 }`}
             >
               <LogIn className="w-6 h-6" />
-              Entrar
+              Login
             </button>
 
             <button
@@ -106,7 +106,7 @@ export default function MobileMenu({
                 }`}
             >
               <UserPlus className="w-6 h-6" />
-              Cadastrar
+              Sign Up
             </button>
           </div>
         )}
