@@ -51,7 +51,7 @@ export default function GameDetails() {
   const genres = game.genres?.map((g) => g.name).join(", ");
   const releaseDate = new Date(game.released).toLocaleDateString("en-US");
 
-  // Formatação do jogo para o FavoriteButton
+
   const gameData = {
     id: parseInt(game.id),
     title: game.name,
@@ -111,7 +111,7 @@ export default function GameDetails() {
   <FavoriteButton
     game={gameData}
     size="large"
-    showText={true}
+    showText={false}
     className="shadow-lg self-start sm:self-center"
   />
 </div>
