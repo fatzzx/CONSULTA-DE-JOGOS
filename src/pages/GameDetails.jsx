@@ -165,13 +165,13 @@ export default function GameDetails() {
                 </div>
               </div>
               <div>
-                <h3 className="text-gray-400 text-sm uppercase mb-1">PRICE</h3>
-                <p className="font-medium">
-                  {priceData && priceData.offers?.length > 0
-  ? `$ ${priceData.offers[0].currentPrice.toFixed(2)}`
-  : <span className="text-gray-400 italic">Unavailable</span>}
-                </p>
-              </div>
+  <h3 className="text-gray-400 text-sm uppercase mb-1">PRICE</h3>
+  <p className={priceData && priceData.offers?.length > 0 ? "font-medium text-green-400" : "font-medium text-gray-400 italic"}>
+    {priceData && priceData.offers?.length > 0
+      ? `$ ${priceData.offers[0].currentPrice.toFixed(2)}`
+      : "Unavailable"}
+  </p>
+</div>
             </div>
           </div>
 
