@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-body {
+html, body {
+  overflow-x: hidden;
   font-family: "Outfit", sans-serif;
   background: linear-gradient(to bottom, #0f0f1a, #000);
   color: #fff;

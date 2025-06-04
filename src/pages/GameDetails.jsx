@@ -106,14 +106,15 @@ export default function GameDetails() {
       <main className="px-6 max-w-7xl mx-auto">
         <div className="relative bg-[#1b1b1b] rounded-2xl px-6 py-8 mb-16 shadow-lg">
           {/* Botão de favorito usando o componente FavoriteButton */}
-          <div className="absolute top-6 right-6 z-10">
-            <FavoriteButton
-              game={gameData}
-              size="large"
-              showText={true}
-              className="shadow-lg"
-            />
-          </div>
+<div className="pb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <h1 className="text-4xl sm:text-5xl font-bold">{game.name}</h1>
+  <FavoriteButton
+    game={gameData}
+    size="large"
+    showText={true}
+    className="shadow-lg self-start sm:self-center"
+  />
+</div>
 
           <div className="pb-6">
             <h1 className="text-5xl font-bold mb-2">{game.name}</h1>
