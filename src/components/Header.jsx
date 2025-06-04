@@ -8,7 +8,8 @@ export default function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-const { isAuthenticated, logout, loading } = useAuth();
+  const { isAuthenticated, logout, loading } = useAuth();
+
   if (loading) return null;
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
@@ -34,7 +35,7 @@ const { isAuthenticated, logout, loading } = useAuth();
             window.location.reload();
           }}
           className="flex items-center gap-2 cursor-pointer transition-transform duration-200 hover:scale-105"
-          title="Voltar para a Home"
+          title="Go to Home"
         >
           <img src="/logoplay.png" alt="Gameworth Logo" className="h-10" />
         </div>
@@ -53,11 +54,10 @@ const { isAuthenticated, logout, loading } = useAuth();
               className="cursor-pointer text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-500 transition duration-300 flex items-center gap-2"
             >
               <Star className="w-5 h-5" />
-              Favoritos
+              Favorites
             </span>
           )}
 
-          {/* Menu do usuário */}
           <div className="relative">
             {isAuthenticated ? (
               <div>
@@ -66,17 +66,17 @@ const { isAuthenticated, logout, loading } = useAuth();
                   className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg transition-colors"
                 >
                   <User className="w-5 h-5" />
-                  <span className="text-sm">Perfil</span>
+                  <span className="text-sm">Profile</span>
                 </button>
 
                 {userMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2 border border-gray-700 z-50">
+                  <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2 border border-gray-700 z-50">
                     <button
                       onClick={() => handleNavigation("/favorites")}
                       className="w-full px-4 py-2 text-left hover:bg-gray-700 transition-colors flex items-center gap-2"
                     >
                       <Star className="w-4 h-4" />
-                      Meus Favoritos
+                      My Favorites
                     </button>
                     <hr className="border-gray-700 my-1" />
                     <button
@@ -84,7 +84,7 @@ const { isAuthenticated, logout, loading } = useAuth();
                       className="w-full px-4 py-2 text-left hover:bg-gray-700 transition-colors flex items-center gap-2 text-red-400"
                     >
                       <LogOut className="w-4 h-4" />
-                      Sair
+                      Logout
                     </button>
                   </div>
                 )}
@@ -96,14 +96,14 @@ const { isAuthenticated, logout, loading } = useAuth();
                   className="flex items-center gap-2 text-white hover:text-blue-400 transition-colors"
                 >
                   <LogIn className="w-5 h-5" />
-                  <span className="text-sm">Entrar</span>
+                  <span className="text-sm">Login</span>
                 </button>
                 <button
                   onClick={() => navigate("/register")}
                   className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg transition-colors"
                 >
                   <UserPlus className="w-5 h-5" />
-                  <span className="text-sm">Cadastrar</span>
+                  <span className="text-sm">Sign Up</span>
                 </button>
               </div>
             )}
@@ -118,11 +118,10 @@ const { isAuthenticated, logout, loading } = useAuth();
         </button>
       </div>
 
-      {/* Fechar menu do usuário ao clicar fora */}
       {userMenuOpen && (
         <div
           className="fixed inset-0 z-40"
-           onMouseDown={() => setUserMenuOpen(false)}
+          onMouseDown={() => setUserMenuOpen(false)}
         />
       )}
 

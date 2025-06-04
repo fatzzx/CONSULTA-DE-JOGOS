@@ -32,7 +32,7 @@ export default function Favorites() {
       const data = await favoritesAPI.getFavorites();
       setFavorites(data || []);
     } catch (error) {
-      setError(error.message || "Erro ao carregar favoritos");
+      setError(error.message || "Failed to load favorites");
       console.error("Error fetching favorites:", error);
     } finally {
       setLoading(false);
@@ -41,7 +41,7 @@ export default function Favorites() {
 
   const handleRemoveFavorite = async (favoriteId, gameTitle) => {
     if (
-      !confirm(`Tem certeza que deseja remover "${gameTitle}" dos favoritos?`)
+      !confirm(`Are you sure you want to remove "${gameTitle}" from favorites?`)
     ) {
       return;
     }
@@ -49,11 +49,9 @@ export default function Favorites() {
     try {
       setRemovingId(favoriteId);
       await favoritesAPI.removeFavorite(favoriteId);
-
-      // Remover da lista local
       setFavorites((prev) => prev.filter((fav) => fav._id !== favoriteId));
     } catch (error) {
-      setError(error.message || "Erro ao remover favorito");
+      setError(error.message || "Failed to remove favorite");
       console.error("Error removing favorite:", error);
     } finally {
       setRemovingId(null);
@@ -83,7 +81,7 @@ export default function Favorites() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <Star className="w-8 h-8 text-yellow-500 fill-current" />
-            <h1 className="text-3xl font-bold">Meus Favoritos</h1>
+            <h1 className="text-3xl font-bold">My Favorites</h1>
           </div>
 
           {error && (
@@ -96,16 +94,16 @@ export default function Favorites() {
             <div className="text-center py-12">
               <Star className="w-16 h-16 text-gray-600 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-gray-400 mb-2">
-                Nenhum jogo favoritado ainda
+                No games favorited yet
               </h2>
               <p className="text-gray-500 mb-6">
-                Explore nosso catálogo e adicione seus jogos favoritos aqui!
+                Explore our catalog and add your favorite games here!
               </p>
               <button
                 onClick={() => navigate("/")}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
               >
-                Explorar Jogos
+                Browse Games
               </button>
             </div>
           ) : (
@@ -131,7 +129,7 @@ export default function Favorites() {
                       }
                       disabled={removingId === favorite._id}
                       className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-50"
-                      title="Remover dos favoritos"
+                      title="Remove from favorites"
                     >
                       {removingId === favorite._id ? (
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -149,8 +147,8 @@ export default function Favorites() {
                       {favorite.title}
                     </h3>
                     <p className="text-sm text-gray-400">
-                      Adicionado em{" "}
-                      {new Date(favorite.createdAt).toLocaleDateString("pt-BR")}
+                      Added on{" "}
+                      {new Date(favorite.createdAt).toLocaleDateString("en-US")}
                     </p>
                   </div>
                 </div>
@@ -162,9 +160,7 @@ export default function Favorites() {
             <div className="mt-8 text-center">
               <p className="text-gray-400">
                 {favorites.length}{" "}
-                {favorites.length === 1
-                  ? "jogo favoritado"
-                  : "jogos favoritados"}
+                {favorites.length === 1 ? "game favorited" : "games favorited"}
               </p>
             </div>
           )}
