@@ -1,20 +1,22 @@
 @import "tailwindcss";
 
+
 html, body {
   overflow-x: hidden;
+  max-width: 100vw;
   font-family: "Outfit", sans-serif;
   background: linear-gradient(to bottom, #0f0f1a, #000);
   color: #fff;
+  box-sizing: border-box;
 }
+
+
+* {
+  box-sizing: inherit;
+}
+
 
 input::-webkit-search-cancel-button {
   -webkit-appearance: none;
   display: none;
-}
-* {
-  box-sizing: border-box;
-}
-
-body {
-  max-width: 100vw;
 }

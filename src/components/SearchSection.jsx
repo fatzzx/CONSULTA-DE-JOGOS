@@ -37,17 +37,22 @@ export default function SearchSection({
           />
 
           {searchTerm && (
-            <button
-              type="button"
-              onClick={() => {
-                setSearchTerm("");
-                setSuggestions([]);
-              }}
-              className="absolute right-28 top-3 text-gray-400 hover:text-white"
-              title="Clear search"
-            >
-              ✕
-            </button>
+
+<button
+  type="button"
+  onClick={() => {
+    setSearchTerm("");
+    setSuggestions([]);
+  }}
+  className="absolute right-20 sm:right-28 top-3 text-gray-400 hover:text-white"
+  title="Clear search"
+>
+  ✕
+</button>
+
+           
+
+
           )}
 
           <button
